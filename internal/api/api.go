@@ -3,8 +3,10 @@ package api
 import (
 	"encoding/json"
 	"net/http"
+	"os"
 
 	"github.com/HiogoPariz/files-notez/internal/storage"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,6 +18,13 @@ type Message struct {
 
 func SetupRouter() *gin.Engine {
 	router := gin.Default()
+
+	// CORS Middleware
+	//TODO SEPARAR MIDDLEWARE / ARRUMAR ORIGINS
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{os.Getenv("URL")}
+	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE"}
+	router.Use(cors.New(config))
 
 	router.GET("/health", func(c *gin.Context) {
 		c.String(http.StatusOK, "OK")

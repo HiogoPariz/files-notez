@@ -13,7 +13,6 @@ func ReadFile(path string) (string, error) {
 
 func WriteFile(path string, content string) error {
 	byteContent := []byte(content)
-
 	// TODO reavaliar as permissões xD
 	return os.WriteFile("./.files/"+path+".json", byteContent, 0777)
 }
